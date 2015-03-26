@@ -1,22 +1,23 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 #include <algorithm>
 #include <ctime>
 #include <cctype>
+#include <iterator>
 
-int main(){
+int main(int argc, char** argv)
+{
 	//setup
 	const int MAX_WRONG = 8; //maximum number of incorrect guesses allowed
-
-	std::vector<std::string> words; //collection of possible words to guess
-	words.push_back("GUESS");
-	words.push_back("HANGMAN");
-	words.push_back("DIFFICULT");
+	std::ifstream is("words.txt");
+	std::istream_iterator<std::string> start(is), end;
+	std::vector<std::string> words(start, end); //collection of possible words to guess
 
 	srand(time(0));
 	random_shuffle(words.begin(), words.end());
-	const std::string THE_WORD = words[0];	//word to guess
+	const std::string THE_WORD = words[0]; //word to guess
 	int wrong = 0;
 	std::string soFar(THE_WORD.size(), '-');
 	std::string used = "";
@@ -69,6 +70,5 @@ int main(){
 	std::cout << "\nThe word was " << THE_WORD << std::endl;
 
 	system("PAUSE");
-
 	return 0;
 }
