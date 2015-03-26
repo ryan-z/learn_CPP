@@ -5,50 +5,48 @@
 #include <ctime>
 #include <cctype>
 
-using namespace std;
-
 int main(){
 	//setup
 	const int MAX_WRONG = 8; //maximum number of incorrect guesses allowed
 
-	vector<string> words; //collection of possible words to guess
+	std::vector<std::string> words; //collection of possible words to guess
 	words.push_back("GUESS");
 	words.push_back("HANGMAN");
 	words.push_back("DIFFICULT");
 
 	srand(time(0));
 	random_shuffle(words.begin(), words.end());
-	const string THE_WORD = words[0];	//word to guess
+	const std::string THE_WORD = words[0];	//word to guess
 	int wrong = 0;
-	string soFar(THE_WORD.size(), '-');
-	string used = "";
+	std::string soFar(THE_WORD.size(), '-');
+	std::string used = "";
 
-	cout << "Welcome to hangman.  Good luck!\n";
+	std::cout << "Welcome to hangman.  Good luck!\n";
 
 	// main loop
 	while ((wrong < MAX_WRONG) && (soFar != THE_WORD))
 	{
-		cout << "\n\nYou have " << (MAX_WRONG - wrong) << " incorrect guesses left.\n";
-		cout << "\nYou've used the following letters:\n" << used << endl;
-		cout << "\nSo far, the word is:\n" << soFar << endl;
+		std::cout << "\n\nYou have " << (MAX_WRONG - wrong) << " incorrect guesses left.\n";
+		std::cout << "\nYou've used the following letters:\n" << used << std::endl;
+		std::cout << "\nSo far, the word is:\n" << soFar << std::endl;
 
 		char guess;
-		cout << "\n\nEnter your guess: ";
-		cin >> guess;
+		std::cout << "\n\nEnter your guess: ";
+		std::cin >> guess;
 		guess = toupper(guess); //make uppercase since secretword is uppercase
-		while (used.find(guess) != string::npos)
+		while (used.find(guess) != std::string::npos)
 		{
-			cout << "\nYou've already guessed " << guess << endl;
-			cout << "Enter your guess: ";
-			cin >> guess;
+			std::cout << "\nYou've already guessed " << guess << std::endl;
+			std::cout << "Enter your guess: ";
+			std::cin >> guess;
 			guess = toupper(guess);
 		}
 
 		used += guess;
 
-		if (THE_WORD.find(guess) != string::npos)
+		if (THE_WORD.find(guess) != std::string::npos)
 		{
-			cout << "That's right! " << guess << " is in the word.\n";
+			std::cout << "That's right! " << guess << " is in the word.\n";
 
 			//update soFar to include newly guessed letter
 			for (int i = 0; i < THE_WORD.length(); ++i)
@@ -57,18 +55,18 @@ int main(){
 		}
 		else
 		{
-			cout << "Sorry, " << guess << " isn't in the word.\n";
+			std::cout << "Sorry, " << guess << " isn't in the word.\n";
 			++wrong;
 		}
 	}
 
 	//shut down
 	if (wrong == MAX_WRONG)
-		cout << "\nYou've been hanged!";
+		std::cout << "\nYou've been hanged!";
 	else
-		cout << "\nYou guessed it!";
+		std::cout << "\nYou guessed it!";
 
-	cout << "\nThe word was " << THE_WORD << endl;
+	std::cout << "\nThe word was " << THE_WORD << std::endl;
 
 	system("PAUSE");
 
